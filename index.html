@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SoftSell - Sell Your Software Licenses</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg'><text y='1em' font-size='26'>💼</text></svg>">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-light: #000;
+      --accent-light: #444;
+      --bg-light: #fff;
+      --text-light: #111;
+
+      --primary-dark: #fff;
+      --accent-dark: #bbb;
+      --bg-dark: #111;
+      --text-dark: #f0f0f0;
+
+      --radius: 12px;
+      --transition: 0.3s ease;
+    }
+
+    [data-theme="light"] {
+      --primary: var(--primary-light);
+      --accent: var(--accent-light);
+      --bg: var(--bg-light);
+      --text: var(--text-light);
+    }
+
+    [data-theme="dark"] {
+      --primary: var(--primary-dark);
+      --accent: var(--accent-dark);
+      --bg: var(--bg-dark);
+      --text: var(--text-dark);
+    }
+
+    * {
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+      transition: background-color var(--transition), color var(--transition), border-color var(--transition);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background: var(--bg);
+      padding: 1.5em 2em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid var(--accent);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      font-size: 1.5em;
+      font-weight: bold;
+      color: var(--primary);
+      gap: 0.5em;
+      animation: slideInLeft 1s ease forwards;
+    }
+
+    .btn {
+      background: var(--primary);
+      color: var(--bg);
+      padding: 0.6em 1.3em;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    section {
+      padding: 4em 2em;
+      max-width: 1100px;
+      margin: auto;
+    }
+
+    .hero {
+      background: var(--accent);
+      color: var(--bg);
+      border-bottom-left-radius: 60px;
+      border-bottom-right-radius: 60px;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hero h2 {
+      font-size: 2.8em;
+      margin-bottom: 0.5em;
+      animation: popUp 1s ease forwards;
+    }
+
+    .hero p {
+      font-size: 1.2em;
+      margin-bottom: 1.5em;
+      animation: fadeIn 2s ease forwards;
+    }
+
+    h2 {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 1.5em;
+    }
+
+    .cards, .tiles {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2em;
+      justify-content: center;
+    }
+
+    .card, .tile, .testimonial {
+      border: 1px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 2em;
+      text-align: center;
+      background: transparent;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      flex: 1 1 280px;
+      animation: fadeInUp 1s ease forwards;
+    }
+
+    .testimonial {
+      font-style: italic;
+    }
+
+    .testimonial span {
+      display: block;
+      margin-top: 0.5em;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1em;
+      max-width: 500px;
+      margin: auto;
+    }
+
+    input, select, textarea {
+      padding: 0.8em;
+      border-radius: var(--radius);
+      border: 1px solid var(--accent);
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    textarea {
+      height: 120px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 2em 1em;
+      font-size: 0.9em;
+      color: var(--accent);
+      border-top: 1px solid var(--accent);
+    }
+
+    .toggle-switch {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+    }
+
+    .switch {
+      position: relative;
+      width: 40px;
+      height: 20px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 20px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 14px;
+      width: 14px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(20px);
+    }
+
+    /* Animations */
+    @keyframes slideInLeft {
+      from { transform: translateX(-100%); opacity: 0; }
+      to { transform: translateX(0); opacity: 1; }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes popUp {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .cards, .tiles {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="logo">💼 SoftSell</div>
+  <div class="toggle-switch">
+    <label class="switch">
+      <input type="checkbox" id="modeToggle">
+      <span class="slider"></span>
+    </label>
+    <span id="modeLabel">Light Mode</span>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>Sell Your Unused Software Licenses</h2>
+  <p>Monetize dormant software. Fast. Secure. Hassle-free.</p>
+  <a href="#contact" class="btn">Sell My Licenses</a>
+</section>
+
+<section>
+  <h2>How It Works</h2>
+  <div class="cards">
+    <div class="card">
+      <h3>📤 Upload License</h3>
+      <p>Submit your license details securely.</p>
+    </div>
+    <div class="card">
+      <h3>📊 Get Valuation</h3>
+      <p>Receive an instant market-based quote.</p>
+    </div>
+    <div class="card">
+      <h3>💸 Get Paid</h3>
+      <p>Accept and receive money same day.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Why Choose Us</h2>
+  <div class="tiles">
+    <div class="tile">⚡ Fast Payouts</div>
+    <div class="tile">🔐 Secure Platform</div>
+    <div class="tile">🌍 Trusted Globally</div>
+    <div class="tile">💬 24/7 Support</div>
+  </div>
+</section>
+
+<section>
+  <h2>Customer Testimonials</h2>
+  <div class="tiles">
+    <div class="testimonial">
+      “They made the process super smooth. Got paid same day!”
+      <span>- Alex Morgan</span>
+    </div>
+    <div class="testimonial">
+      “Highly recommended for quick license monetization.”
+      <span>- Riya Patel</span>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <h2>Contact Us</h2>
+  <form>
+    <input type="text" placeholder="Your Name" required />
+    <input type="email" placeholder="Your Email" required />
+    <input type="text" placeholder="Company Name" required />
+    <select required>
+      <option value="">Select License Type</option>
+      <option value="windows">Windows</option>
+      <option value="office">MS Office</option>
+      <option value="adobe">Adobe Suite</option>
+      <option value="other">Other</option>
+    </select>
+    <textarea placeholder="Your Message" required></textarea>
+    <button type="submit" class="btn">Submit</button>
+  </form>
+</section>
+
+<footer>
+  &copy; 2025 SoftSell. Designed with simplicity & flair.
+</footer>
+
+<script>
+  const toggle = document.getElementById("modeToggle");
+  const label = document.getElementById("modeLabel");
+  const root = document.documentElement;
+
+  toggle.addEventListener("change", () => {
+    const isDark = toggle.checked;
+    root.setAttribute("data-theme", isDark ? "dark" : "light");
+    label.textContent = isDark ? "Dark Mode" : "Light Mode";
+  });
+</script>
+</body>
+</html>
